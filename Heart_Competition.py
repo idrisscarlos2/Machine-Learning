@@ -32,45 +32,45 @@ X_unknown = preprocessing.StandardScaler().fit(X_unknown).transform(X_unknown)
 X_train, X_test, y_train, y_test = train_test_split(X,y, test_size =0.2, random_state=4) #split data into train and test 
 
 '''
-Building the model for different c values and solver values
+Building a logistic model for different c values and solver values
 '''
-#c_values = np.linspace(0.42,0.48,500)
-#solvers = ['newton-cg','lbfgs','liblinear', 'sag','saga']
-#list_accuracies = []
-#
-#for sol in solvers:
-#    accuracy = []
-#    for cv in c_values:
-#        LR = LogisticRegression(C=cv, solver=sol).fit(X_train, y_train)
-#        yhat_proba = LR.predict_proba(X_test)
-#        accuracy.append(log_loss(y_test, yhat_proba))
-#    list_accuracies.append(accuracy)
-#  
-##    
-##fig, ax = plt.subplots(5, figsize=(15,10))
-##fig.suptitle("subplots according to C values and solvers")
-##ax[0].plot(c_values, list_accuracies[0])
-##ax[1].plot(c_values, list_accuracies[1])
-##ax[2].plot(c_values, list_accuracies[2])
-##ax[3].plot(c_values, list_accuracies[3])
-##ax[4].plot(c_values, list_accuracies[4])
-#
-#'''
-#LOOKING FOR THE MINIMUN IN ALL LIST_ACCURACIES
-#'''
-#min_indexes = []
-#min_log_losses =[]
-#for i in range(5):
-#    min_log_losses.append(min(list_accuracies[i]))
-#    min_indexes.append(list_accuracies[i].index(min(list_accuracies[i])))
-#
-#min_cv = []
-#for i in min_indexes:
-#    min_cv.append (c_values[i])
-#    
-#'''
-#BEST PARAMETERS ARE C = 0.45192193192019076, AND solver = 'liblinear'
-#'''
+c_values = np.linspace(0.42,0.48,500)
+solvers = ['newton-cg','lbfgs','liblinear', 'sag','saga']
+list_accuracies = []
+
+for sol in solvers:
+    accuracy = []
+    for cv in c_values:
+        LR = LogisticRegression(C=cv, solver=sol).fit(X_train, y_train)
+        yhat_proba = LR.predict_proba(X_test)
+        accuracy.append(log_loss(y_test, yhat_proba))
+    list_accuracies.append(accuracy)
+  
+    
+fig, ax = plt.subplots(5, figsize=(15,10))
+fig.suptitle("subplots according to C values and solvers")
+ax[0].plot(c_values, list_accuracies[0])
+ax[1].plot(c_values, list_accuracies[1])
+ax[2].plot(c_values, list_accuracies[2])
+ax[3].plot(c_values, list_accuracies[3])
+ax[4].plot(c_values, list_accuracies[4])
+
+'''
+LOOKING FOR THE MINIMUN IN ALL LIST_ACCURACIES
+'''
+min_indexes = []
+min_log_losses =[]
+for i in range(5):
+    min_log_losses.append(min(list_accuracies[i]))
+    min_indexes.append(list_accuracies[i].index(min(list_accuracies[i])))
+
+min_cv = []
+for i in min_indexes:
+    min_cv.append (c_values[i])
+    
+'''
+BEST PARAMETERS ARE C = 0.45192193192019076, AND solver = 'liblinear'
+'''
 
 LR = LogisticRegression(C= 0.42, solver='liblinear').fit(X, y)
 y_unknown_proba = LR.predict_proba(X_unknown)
